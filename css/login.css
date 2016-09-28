@@ -1,0 +1,56 @@
+html, body{
+  height: 100%;
+}
+
+body {
+  font-family: "Lucida Grande", "Segoe UI", Ubuntu, Cantarell, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+#login {
+  background-color: #000;
+  color: white;
+  padding-top: 25px;
+  padding-bottom: 50px;
+  padding-left: 50px;
+  padding-right: 50px;
+  height:100%;
+  width:100%;
+  float:left;
+}
+#login a {
+  font-size: 1.8rem;
+  color:#555
+}
+#login a:hover {
+  color: #52affb
+}
+#login ul {
+  list-style: none;
+  padding: 20px;
+  margin: 0
+}
+#login li {
+  padding-bottom: 8px;
+}
+#wrapper {
+  width: 100%;
+  min-width: 600px;
+  height: 100%;
+}
+
+/* Absolute Center Spinner */
+.loading {
+  position: fixed;
+  z-index: 999;
+  height: 2em;
+  width: 2em;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+

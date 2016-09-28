@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en-us" />
+
+<head>
+    <title>
+        DB Login
+    </title>
+    <!-- Use Unicode character encoding -->
+    <meta charset="utf-8" />
+    <!-- Tell IE to display content in highest HTML 5 mode available -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Tell mobile browsers to use the device width when rendering -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" media="all" rel="stylesheet" type="text/css" />
+
+    <!-- Custom Styles for this Project -->
+    <link href="css/login.css" rel="stylesheet" />
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script>window.$ = window.jQuery = require('./js/jquery-2.2.3.min.js');</script>
+<!--    <script src="js/jquery-2.2.3.min.js"></script>  -->
+
+    <!-- Bootstrap jQuery -->
+    <script src="js/bootstrap.min.js"></script>
+    
+    <!-- script for this -->
+    <script src="js/login.js"></script>
+
+
+</head>
+
+<body>
+    <div id="loginServerAddr" style="display:none" data-value=""></div> 
+    <div id="loginDBName" style="display:none" data-value="master"></div>
+    <div id="loginAuthType" style="display:none" data-value="S"></div>
+    <div id="loginUserID" style="display:none" data-value=""></div> 
+    <div id="loginUserPswd" style="display:none" data-value=""></div>
+    <div id="platformOS" style="display:none" data-value=""></div>
+    <div id="dbDriver" style="display:none" data-value="tedious"></div>
+    <!-- <div id="dbDriver" style="display:none" data-value="msnodesql"></div> -->
+
+    <!-- DB connect -->
+            <div id="login">
+                <div>
+                    <label class="control-label">Server</label>
+                    <input type="text" class="form-control" name="serverName" id="serverAddrText" autofocus/>
+                    <br/>
+
+                    <label class="control-label" id="authSelectorLabel">Authentication</label>
+                    <div class="selectContainer"  id="authSelector">
+                        <select class="form-control" name="authType" id="authTypeSelector" disabled="true">
+                            <option id="optionSQLAuth" value="S">SQL Server</option>
+                            <option id="optionWinAuth" value="W">Windows Authentication</option>
+                        </select>
+                    </div>
+                    <br/>
+                    
+                    <label class="control-label">User id</label>
+                    <input type="text" class="form-control" name="userName" id="userNameText"/>
+                    <br/>
+
+                    <label class="control-label">Password</label>
+                    <input type="password" class="form-control" name="userPswd" id="userPswdText"/>
+                    <br/>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-primary" id="connectButton" onclick="connectToDb(); return false;">Connect</button>&nbsp;&nbsp;
+                    <span class="inline" style="display:none" name="connStatusLabel" id="connStatusText" style="color: green"></span>
+                </div>
+            </div>
+
+    <script type="text/javascript">
+    // You can also require other files to run in this process
+    require('./renderer.js')
+
+        $(document).ready(function() {
+            var ipcIndexRenderer = require('electron').ipcRenderer;
+
+            document.getElementById("connectButton").addEventListener("keypress", connectToDB);
+            document.getElementById("authTypeSelector").addEventListener("change", saveAuthType);
+
+            // save OS to document variable
+            saveOS();
+
+            // set autofocus on modal dialogs
+            $('.modal').on('shown.bs.modal', function() {
+                $(this).find('[autofocus]').focus();
+            });
+
+            // save the SQL authorization type
+            function saveAuthType() {
+                var authType = document.getElementById("authTypeSelector").value;
+                document.getElementById("loginAuthType").setAttribute("data-value", authType);
+                ipcIndexRenderer.send("consoleLog", "authType: " + authType + "\n");
+                enableDisableAuth();
+            };
+
+            // enable/disable Connect button
+            function enableDisableConnect() {
+                var myServerAddr = document.getElementById("serverAddrText").value;
+
+                if (myServerAddr) {
+                    $('#connectButton').prop('disabled', false);  
+                } else {
+                    $('#connectButton').prop('disabled', true);
+                };
+            };
+
+            // enable/disable user name/password in db connect modal
+            function enableDisableAuth() {
+                var authType = document.getElementById("loginAuthType").getAttribute("data-value");
+
+                if (authType == 'S') {
+                    $('#userNameText').prop('disabled', false); 
+                    $('#userPswdText').prop('disabled', false);  
+                } else {
+                    $('#userNameText').prop('disabled', true); 
+                    $('#userPswdText').prop('disabled', true);  
+                };
+            };
+
+        });
+
+    </script>
+
+   
+</body>

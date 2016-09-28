@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en-us" />
+
+<head>
+    <title>
+        Test pikaday
+    </title>
+    <!-- Use Unicode character encoding -->
+    <meta charset="utf-8" />
+    <!-- Tell IE to display content in highest HTML 5 mode available -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Tell mobile browsers to use the device width when rendering -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" media="all" rel="stylesheet" type="text/css" />
+
+    <!-- Custom Styles for this Project -->
+    <link href="css/AppStyles.css" rel="stylesheet" />
+    <link href="css/pikaday.css" rel="stylesheet" type="text/css"/>
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+        <div id="side-nav">
+            <div >
+                <!-- server/db elements -->
+                <div>
+                    <label class="control-label">Server</label>
+                    <input type="text" class="form-control" name="serverAddr" id="serverAddrText" autofocus/>
+                    <br/>
+                </div>
+                <div>
+                    <label class="control-label">Database</label>
+                    <input type="text" class="form-control" name="dbName" id="dbNameText"/>
+                    <br/>
+                </div>
+                <div>
+                    <button type="button" class="btn btn-primary" id="connectButton" >Connect</button>&nbsp;
+                    <label class="control-label" name="connStatusLabel" id="connStatusText" style="color: red">Disconnected</label>
+                </div>
+
+                <hr/>
+            </div>  <!-- row... -->
+
+            <div>
+
+<label for="datepicker">Date Of Birth :</label>
+<input type="text" class="form-control" name="selected_date" id="datepicker"/>
+            </div>
+
+        </div>  <!-- side-nav -->
+    </div>  <!-- wrapper -->
+
+<script src="js/pikaday.js"></script>
+
+    <script>
+        var picker = new Pikaday(
+            {
+                field: document.getElementById('datepicker'),
+                firstDay: 1,
+                minDate: new Date(2000, 0, 1),
+                maxDate: new Date(2020, 12, 31),
+                yearRange: [2000,2020]
+            });
+    </script>
+
+</body>
